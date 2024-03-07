@@ -1,0 +1,24 @@
+# Replace the placeholders before running `kubectl apply -f pod.yaml`
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sc-demo-openai-connstr
+  namespace: default
+spec:
+  restartPolicy: Never
+  containers:
+  - name: demoapp
+    image: <YourContainerImage>                             # E.g., mydemo.azurecr.io/sc-demo-openai-connstr:latest
+    ports:
+    - containerPort: 80
+    envFrom:
+    - secretRef:
+        name: <SecretCreatedByServiceConnector>             # E.g., sc-account412a8-secret
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 256Mi
